@@ -2,6 +2,7 @@
 
 Team Members:
 Reece Dorton
+Noah Porter
 
 # Commiting
 1. Create a branch
