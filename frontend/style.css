@@ -9,10 +9,24 @@
   --text-color: #E5E7EB;      /* Main text */
   --muted-text: #94A3B8;      /* Secondary text */
   --danger-color: #F87171;    /* Delete buttons, alerts */
+  --success-color: #4ADE80;
 }
 
 /* ==============================
-   Body & Global Styles
+   Light Mode Overrides
+   ============================== */
+body.light-mode {
+  --bg-color: #F8FAFC;
+  --card-bg: #FFFFFF;
+  --text-color: #1E293B;
+  --muted-text: #64748B;
+  --primary-color: #3B82F6;
+  --secondary-color: #60A5FA;
+  --danger-color: #EF4444;
+}
+
+/* ==============================
+   Global Styles
    ============================== */
 body {
   background-color: var(--bg-color);
@@ -23,26 +37,146 @@ body {
 }
 
 /* ==============================
-   Card Component
+   Header / Title Bar
    ============================== */
-.card {
+#header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 15px;
+  border-bottom: 3px solid var(--primary-color);
   background-color: var(--card-bg);
+  font-size: 2rem;
+  font-weight: bold;
   color: var(--text-color);
-  padding: 1rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  margin: 1rem 0;
+  z-index: 1000;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
 /* ==============================
-   Form Styles
+   Content / Table Wrapper
    ============================== */
-form {
+.content {
+  padding: 100px 20px 20px 20px; /* leave space for header */
+  display: flex;
+  justify-content: center;
+}
+
+/* ==============================
+   Table Styles
+   ============================== */
+table {
+  border-collapse: collapse;
+  width: 90%;
+  min-width: 600px;
   background-color: var(--card-bg);
-  border: 1px solid #E5E7EB;
   border-radius: 8px;
-  padding: 20px;
-  max-width: 600px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+th, td {
+  padding: 12px 15px;
+  border: 1px solid var(--muted-text);
+  text-align: left;
+}
+
+th {
+  background-color: var(--primary-color);
+  color: var(--card-bg);
+}
+
+tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+tr:hover {
+  background-color: rgba(56, 189, 248, 0.2);
+}
+
+/* ==============================
+   Login Styles
+   ============================== */
+
+.login-title {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.login-form {
+  border: 2px solid var(--muted-text);
+  background-color: var(--card-bg);
+  max-width: 400px;
   margin: 40px auto;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.login-form .container {
+  padding: 16px;
+}
+
+/* Inputs */
+input[type=text],
+input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid var(--muted-text);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+/* Buttons */
+button {
+  background-color: var(--primary-color);
+  color: var(--card-bg);
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: var(--secondary-color);
+}
+
+.signupbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: var(--success-color);
+  color: #022c22;
+}
+
+.signupbtn:hover {
+  background-color: #22c55e;
+}
+/* Footer area */
+.login-form .footer {
+  background-color: rgba(255,255,255,0.05);
+}
+
+.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* Responsive */
+@media screen and (max-width: 300px) {
+  .psw {
+    display: block;
+    float: none;
+  }
+  .cancelbtn {
+    width: 100%;
+  }
 }
