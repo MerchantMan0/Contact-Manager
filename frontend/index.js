@@ -1,70 +1,4 @@
-/**
- * @typedef {Object} Contact
- * @property {string} id
- * @property {string} name
- * @property {string} email
- * @property {string} phone
- * @property {unknown} created
- */
-
-/**
- * Managing the table through a class rather than directly
- */
-class ContactTable {
-  /**
-   *
-   * @param {HTMLTableElement} element The table to modify
-   * @param {Contact[]} [contacts=[]]
-   */
-  constructor(element, contacts = []) {
-    /** @type {HTMLTableElement} */
-    this.element = element;
-
-    /** @type {Contact[]} */
-    this.contacts = contacts;
-  }
-
-  /**
-   * @param {Contact} contact
-   */
-  addContact(contact) {
-    this.contacts.push(contact);
-  }
-
-  /**
-   * @param {string} id
-   */
-  removeContact(id) {
-    this.contacts.filter((contact) => contact.id !== id);
-  }
-
-  /**
-   * Update the table with the current contacts, optionally with a condition
-   * @param {(contact: Contact) => boolean} [predicate] A function to decide if the contact should be shown
-   */
-  display(predicate) {
-    function makeRow(contact) {
-      const row = document.createElement("tr");
-      for (const field of ["name", "email", "phone", "created"]) {
-        const cell = row.insertCell();
-        cell.innerHTML = contact[field];
-      }
-      return row;
-    }
-
-    const rows = this.contacts.filter(predicate || (() => true)).map(makeRow);
-
-    console.log(rows);
-    console.log(this.element.tBodies[0].replaceChildren(...rows));
-  }
-
-  /**
-   * Remove all shown contacts from the table
-   */
-  clear() {
-    this.element.tBodies[0].replaceChildren();
-  }
-}
+import { ContactTable } from "./table.js";
 
 /** @type {Contact[]} */
 const placeholderContacts = [
@@ -76,6 +10,7 @@ const placeholderContacts = [
     created: "unknown",
   },
   {
+    id: "2",
     name: "Bob",
     email: "b.o.b@bob.bob",
     phone: "(bob) bob-bobb",
@@ -86,5 +21,25 @@ const placeholderContacts = [
 const table = new ContactTable(document.getElementById("contact-table"));
 table.addContact(placeholderContacts[0]);
 table.addContact(placeholderContacts[1]);
-
 table.display();
+
+/**
+ *
+ * @param {string} text Text to find
+ * @param {import("./table.js").Contact} contact The contact to search
+ * @returns {boolean}
+ */
+function hasTextSomewhere(text, contact) {
+  return (
+    contact.name.includes(text) ||
+    contact.email.includes(text) ||
+    contact.phone.includes(text) ||
+    contact.created.toString().includes(text)
+  );
+}
+
+// Set up the search bar
+const searchBar = document.getElementById("search-input");
+searchBar.addEventListener("input", (event) => {
+  console.log(event.target.value);
+});

@@ -61,7 +61,9 @@ body {
 .content {
   padding: 100px 20px 20px 20px; /* leave space for header */
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-content: center;
 }
 
 /* ==============================
@@ -96,6 +98,21 @@ tr:nth-child(even) {
 tr:hover {
   background-color: rgba(56, 189, 248, 0.2);
 }
+
+tr[data-editing="true"] {
+  background-color: rgba(114, 170, 194, 0.2);
+}
+
+/* ==============================
+   Edit/Delete Buttons
+   ============================== */
+.table-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+/* todo: add specific styling to the .edit and .remove buttons*/
 
 /* ==============================
    Login Styles
