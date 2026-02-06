@@ -128,7 +128,7 @@ export class ContactTable {
         }
 
         // Send the edit
-        console.log(newContact);
+        console.log("Editing contact", newContact);
 
         // If it works, change it locally
         if (true) {
@@ -144,6 +144,7 @@ export class ContactTable {
     remove.className = "remove";
 
     const removeClick = () => {
+      console.log("Removing contact", contact)
       this.removeContact(contact.id);
       // Hide the row. It won't be rendered, and once the table is displayed again,
       // the row won't be built at all
@@ -192,7 +193,7 @@ export class ContactTable {
         }
       }
 
-      console.log(newContact); // POST-ing the data happens here
+      console.log("Creating contact", newContact); // POST-ing the data happens here
       this.addContact(newContact);
       this.display()
     };
