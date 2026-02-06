@@ -22,6 +22,9 @@ export class ContactTable {
 
     /** @type {Contact[]} */
     this.contacts = contacts;
+
+    /** @type {(contact: Contact) => boolean} */
+    this.filter = () => true;
   }
 
   /**
@@ -39,21 +42,28 @@ export class ContactTable {
   }
 
   /**
-   * Update the table with the current contacts, optionally with a condition
-   * @param {(contact: Contact) => boolean} [predicate] A function to decide if the contact should be shown
+   * Set the filter for when the table gets shown
+   * @param {(contact: Contact) => boolean} filter
    */
-  display(predicate) {
+  setFilter(filter) {
+    this.filter = filter || (() => true);
+  }
+
+  /**
+   * Update the table with the current contacts,
+   * filtered by the function given to `setFilter`
+   */
+  display() {
     const rows = this.contacts
-      .filter(predicate || (() => true))
-      .map(this.makeRow, this);
+      .filter(this.filter)
+      .map(this.makeContactRow, this);
     this.element.tBodies[0].replaceChildren(...rows);
   }
 
   /** @param {Contact} contact */
-  makeRow(contact) {
+  makeBaseRow(contact) {
     // Make the row
     const row = document.createElement("tr");
-    row.id = contact.id;
     row.className = "table-row";
     row.dataset.editing = "false";
 
@@ -71,6 +81,13 @@ export class ContactTable {
 
       cell.appendChild(input);
     }
+
+    return row;
+  }
+
+  /** @param {Contact} contact */
+  makeContactRow(contact) {
+    const row = this.makeBaseRow(contact);
 
     // Option field
     const cell = row.insertCell();
@@ -138,6 +155,55 @@ export class ContactTable {
     cell.appendChild(remove);
 
     return row;
+  }
+
+  /**
+   * Add a row for making a new contact.
+   * The row is directly added to the table
+   */
+  makeCreationRow() {
+    const row = this.makeBaseRow({
+      name: "",
+      email: "",
+      phone: "",
+      created: "",
+    });
+    row.dataset.editing = true;
+
+    // Make the inputs editable
+    for (const cell of row.childNodes) {
+      cell.childNodes[0].disabled = false;
+    }
+
+    const cell = row.insertCell();
+    cell.className = "table-cell table-options";
+
+    const create = document.createElement("button");
+    create.innerText = "Create";
+    create.className = "create";
+
+    create.onclick = (event) => {
+      const newContact = {};
+
+      // Get all the values
+      for (const cell of row.childNodes) {
+        if (cell.childNodes[0].tagName === "INPUT") {
+          newContact[cell.childNodes[0].name] = cell.childNodes[0].value;
+        }
+      }
+
+      console.log(newContact); // POST-ing the data happens here
+      this.addContact(newContact);
+      this.display()
+    };
+
+    cell.appendChild(create);
+
+    // Workaround to add a row that already exists
+    this.element.tBodies[0].replaceChildren(
+      ...this.element.tBodies[0].childNodes,
+      row,
+    );
   }
 
   /**

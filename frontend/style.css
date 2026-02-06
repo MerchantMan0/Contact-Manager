@@ -63,7 +63,17 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-content: center;
+  align-items: center;
+}
+
+/* ==============================
+   Search Bar
+   ============================== */
+
+.search-bar {
+  width: 85%;
+  height: 20px;
+  margin-bottom: 4px;
 }
 
 /* ==============================
@@ -100,7 +110,8 @@ tr:hover {
 }
 
 tr[data-editing="true"] {
-  background-color: rgba(114, 170, 194, 0.2);
+  background-color: rgba(165, 255, 229, 0.2);
+  /* TODO: This needs a better color */
 }
 
 /* ==============================
@@ -113,6 +124,14 @@ tr[data-editing="true"] {
 }
 
 /* todo: add specific styling to the .edit and .remove buttons*/
+
+/* ==============================
+   Add Contact Button
+   ============================== */
+
+.add-contact {
+  width: 15%;
+}
 
 /* ==============================
    Login Styles

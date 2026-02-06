@@ -23,6 +23,11 @@ table.addContact(placeholderContacts[0]);
 table.addContact(placeholderContacts[1]);
 table.display();
 
+const addButton = document.getElementById("add-contact");
+addButton.onclick = function () {
+  table.makeCreationRow();
+};
+
 /**
  *
  * @param {string} text Text to find
@@ -39,7 +44,8 @@ function hasTextSomewhere(text, contact) {
 }
 
 // Set up the search bar
-const searchBar = document.getElementById("search-input");
+const searchBar = document.getElementById("search-bar");
 searchBar.addEventListener("input", (event) => {
-  console.log(event.target.value);
+  table.setFilter((contact) => hasTextSomewhere(event.target.value, contact));
+  table.display();
 });
