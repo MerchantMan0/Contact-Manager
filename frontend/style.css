@@ -1,0 +1,190 @@
+/* ==============================
+   Dark Mode Theme Variables
+   ============================== */
+:root {
+  --bg-color: #0f172a; /* Page background */
+  --card-bg: #1e293b; /* Card / panel background */
+  --primary-color: #38bdf8; /* Buttons, links */
+  --secondary-color: #22d3ee; /* Hover / accents */
+  --text-color: #e5e7eb; /* Main text */
+  --muted-text: #94a3b8; /* Secondary text */
+  --danger-color: #f87171; /* Delete buttons, alerts */
+  --success-color: #4ade80;
+}
+
+/* ==============================
+   Light Mode Overrides
+   ============================== */
+body.light-mode {
+  --bg-color: #f8fafc;
+  --card-bg: #ffffff;
+  --text-color: #1e293b;
+  --muted-text: #64748b;
+  --primary-color: #3b82f6;
+  --secondary-color: #60a5fa;
+  --danger-color: #ef4444;
+}
+
+/* ==============================
+   Global Styles
+   ============================== */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* ==============================
+   Header / Title Bar
+   ============================== */
+#header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 15px;
+  border-bottom: 3px solid var(--primary-color);
+  background-color: var(--card-bg);
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--text-color);
+  z-index: 1000;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* ==============================
+   Content / Table Wrapper
+   ============================== */
+.content {
+  padding: 100px 20px 20px 20px; /* leave space for header */
+  display: flex;
+  justify-content: center;
+}
+
+/* ==============================
+   Table Styles
+   ============================== */
+table {
+  border-collapse: collapse;
+  width: 90%;
+  min-width: 600px;
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+th,
+td {
+  padding: 12px 15px;
+  border: 1px solid var(--muted-text);
+  text-align: left;
+}
+
+th {
+  background-color: var(--primary-color);
+  color: var(--card-bg);
+}
+
+tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+tr:hover {
+  background-color: rgba(56, 189, 248, 0.2);
+}
+
+/* ==============================
+   Login / Sign Up Styles
+   ============================== */
+
+.login-title {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.signup-title {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.login-form {
+  border: 2px solid var(--muted-text);
+  background-color: var(--card-bg);
+  max-width: 400px;
+  margin: 40px auto;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.signup-form {
+  border: 2px solid var(--muted-text);
+  background-color: var(--card-bg);
+  max-width: 400px;
+  margin: 40px auto;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.login-form .container {
+  padding: 16px;
+}
+
+.signup-form .container {
+  padding: 16px;
+}
+
+/* Inputs */
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid var(--muted-text);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+/* Buttons */
+button {
+  background-color: var(--primary-color);
+  color: var(--card-bg);
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: var(--secondary-color);
+}
+
+.signupbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: var(--success-color);
+  color: #022c22;
+}
+
+.signupbtn:hover {
+  background-color: #22c55e;
+}
+/* Footer area */
+.login-form .footer {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.signup-form .footer {
+  background-color: rgba(255, 255, 255, 0.05);
+}

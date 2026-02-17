@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="js/login.js" defer></script>
+  </head>
+
+  <body>
+    <h2 class="login-title">Login</h2>
+
+    <div class="login-form">
+      <div class="container">
+        <span id="usernameLabel"><b>Username</b></span>
+        <input type="text" id="loginName" placeholder="Enter Username" required>
+
+        <span id="passwordLabel"><b>Password</b></span>
+        <input type="password" id="loginPassword" placeholder="Enter Password" required>
+
+        <button type="button" onclick="doLogin()">Login</button>
+        <span id="loginResult"></span>
+      </div>
+
+      <div class="container footer">
+        <button type="button" class="signupbtn" onclick="window.location.href='signup.html'">Sign Up</button>
+      </div>
+    </div>
+  </body>
+</html>
