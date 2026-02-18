@@ -3,7 +3,7 @@
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: POST');
-header('Access-Control-Allow-Headers: Content-Type, Authroization');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
 //Success (OK)
 if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
@@ -44,7 +44,7 @@ try {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     //Check if uesr exists (and if password matches)
-    if($user || !password_verify($data->password, $user['password'])) {
+    if(!$user || !password_verify($data->password, $user['password'])) {
         http_response_code(401);
         echo json_encode(['error'=> 'Invalid email or password']);
         exit();

@@ -41,7 +41,7 @@ try {
     $db = $database->getConnection();
 
     //Check if email already exists
-    $checkQuery = "SELECT id FROM users WHERE email :email";
+    $checkQuery = "SELECT id FROM users WHERE email = :email";
     $checkStmt = $db->prepare($checkQuery);
     $checkStmt->bindParam(':email', $data->email);
     $checkStmt->execute();
@@ -59,10 +59,10 @@ try {
     $query = "INSERT INTO users (firstName, lastName, email, password) VALUES (:firstName, :lastName, :email, :password)";
     $stmt = $db->prepare($query);
 
-    $stmt->bindParam('firstName', $data->firstName);
-    $stmt->bindParam('lastName', $data->lastName);
+    $stmt->bindParam(':firstName', $data->firstName);
+    $stmt->bindParam(':lastName', $data->lastName);
     $stmt->bindParam(':email', $data->email);
-    $stmt->bindParam('password', $hashedPassword);
+    $stmt->bindParam(':password', $hashedPassword);
 
     if($stmt->execute()) {
         $userID = $db->lastInsertId();
