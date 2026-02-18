@@ -134,10 +134,15 @@ tr[data-editing="true"] {
 }
 
 /* ==============================
-   Login Styles
+   Login / Sign Up Styles
    ============================== */
 
 .login-title {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.signup-title {
   text-align: center;
   margin-top: 60px;
 }
@@ -152,7 +157,21 @@ tr[data-editing="true"] {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
+.signup-form {
+  border: 2px solid var(--muted-text);
+  background-color: var(--card-bg);
+  max-width: 400px;
+  margin: 40px auto;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
 .login-form .container {
+  padding: 16px;
+}
+
+.signup-form .container {
   padding: 16px;
 }
 
@@ -202,18 +221,6 @@ button:hover {
   background-color: rgba(255, 255, 255, 0.05);
 }
 
-.psw {
-  float: right;
-  padding-top: 16px;
-}
-
-/* Responsive */
-@media screen and (max-width: 300px) {
-  .psw {
-    display: block;
-    float: none;
-  }
-  .cancelbtn {
-    width: 100%;
-  }
+.signup-form .footer {
+  background-color: rgba(255, 255, 255, 0.05);
 }
