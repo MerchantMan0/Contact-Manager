@@ -1,9 +1,12 @@
 <?php
 class Database {
+
+    $env = parse_ini_file('.env');
+
     private $host = "localhost";//replace with ip
     private $dbName = "database";//replace with actual name
     private $username = "admin";
-    private $password = "";//db pwd
+    private $password = $env["PASSWORD"];//db pwd
     public $conn;//db connection
 
     public function getConnection() {
