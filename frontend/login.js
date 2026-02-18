@@ -11,13 +11,13 @@ function doLogin() {
     firstName = "";
     lastName = "";
 
-    const username = document.getElementById("loginName").value;
+    const email = document.getElementById("loginEmail").value;
     const password = document.getElementById("loginPassword").value;
 
     document.getElementById("loginResult").innerHTML = "";
 
     const payload = {
-        username: username,
+        email: email,
         password: password
     };
 

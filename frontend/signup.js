@@ -1,5 +1,5 @@
 // Build API URL dynamically
-const apiUrl = window.location.origin + "/api/registration.php";
+const apiUrl = window.location.origin + "/api/register.php";
 
 /* Global variables */
 let userId = 0;
@@ -10,7 +10,7 @@ let username = "";
 function doSignup() {
     userId = 0;
 
-    username = document.getElementById("signupName").value;
+    username = document.getElementById("signupEmail").value;
     const password = document.getElementById("signupPassword").value;
     firstName = document.getElementById("signupFirstName").value;
     lastName = document.getElementById("signupLastName").value;
