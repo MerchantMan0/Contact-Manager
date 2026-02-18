@@ -38,7 +38,7 @@ export class ContactTable {
    * @param {string} id
    */
   removeContact(id) {
-    this.contacts.filter((contact) => contact.id !== id);
+    this.contacts = this.contacts.filter((contact) => contact.id !== id);
   }
 
   /**
