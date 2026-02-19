@@ -16,8 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
-require_once 'config/database.php';
-require_once 'utils/auth.php';
+require_once __DIR__.'/../config/database.php';
+require_once __DIR__.'/../utils/auth.php';
 
 try {
     // Get user from JWT token

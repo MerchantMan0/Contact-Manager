@@ -17,8 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
-require_once 'config/database.php';
-require_once 'utils/auth.php';
+require_once __DIR__.'/../config/database.php';
+require_once __DIR__.'/../utils/auth.php';
 
 try {
     //Get user from token
@@ -39,13 +39,16 @@ try {
     $db = $database->getConnection();
     
     //Insert contact
-    $query = "INSERT INTO contacts (userId, name, email, phone) VALUES (:userId, :name, :email, :phone)";
+    $query = "INSERT INTO contacts (userId, name, email, phone, createdAt) VALUES (:userId, :name, :email, :phone, :createdAt)";
     $stmt = $db->prepare($query);
+    error_log($data->createdAt);
     
     $stmt->bindParam(':userId', $user['userId']);
     $stmt->bindParam(':name', $data->name);
     $stmt->bindParam(':email', $data->email);
     $stmt->bindParam(':phone', $data->phone);
+    // $data->createdAt is already taken?
+    $stmt->bindParam(':createdAt', $data->createdAt);
     
     if ($stmt->execute()) {
         $contactId = $db->lastInsertId();
@@ -57,7 +60,8 @@ try {
                 'id' => $contactId,
                 'name' => $data->name,
                 'email' => $data->email,
-                'phone' => $data->phone
+                'phone' => $data->phone,
+		'createdAt' => $data->createdAt
             ]
         ]);
     } else {

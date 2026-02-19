@@ -7,6 +7,7 @@
  * @property {unknown} created
  */
 
+
 /**
  * Managing the table through a class rather than directly
  */
@@ -130,11 +131,22 @@ export class ContactTable {
         // Send the edit
         console.log("Editing contact", newContact);
 
-        // If it works, change it locally
-        if (true) {
-          this.removeContact(contact.id);
-          this.addContact(newContact);
-        }
+        const body = JSON.stringify({
+          ...newContact,
+          createdAt: newContact.created,
+        })
+
+        fetch(window.location.origin + "/api/contacts/editContact.php", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${getCookie("token")}`
+          },
+          body: body
+        }).then(data => data.text()).then(console.log)
+
+        this.removeContact(contact.id);
+        this.addContact(newContact);
+
       }
     };
     edit.onclick = editClick;
@@ -145,6 +157,17 @@ export class ContactTable {
 
     const removeClick = () => {
       console.log("Removing contact", contact)
+      const body = JSON.stringify({
+          ...contact,
+          createdAt: contact.created,
+        })
+      fetch(window.location.origin + "/api/contacts/deleteContact.php", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${getCookie("token")}`
+          },
+          body: body
+        }).then(data => data.text()).then(console.log)
       this.removeContact(contact.id);
       // Hide the row. It won't be rendered, and once the table is displayed again,
       // the row won't be built at all
@@ -194,8 +217,25 @@ export class ContactTable {
       }
 
       console.log("Creating contact", newContact); // POST-ing the data happens here
-      this.addContact(newContact);
-      this.display()
+
+	const body = JSON.stringify({
+          ...newContact,
+          createdAt: newContact.created,
+        })
+
+      fetch(window.location.origin + "/api/contacts/addContact.php", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${getCookie("token")}`
+        },
+        body: body
+      }).then(data => data.text()).then(text => JSON.parse(text.toString().substring(1))).then((json) => {
+        this.addContact(json);
+        this.display()
+      })
+
+      //this.addContact(newContact);
+      //this.display()
     };
 
     cell.appendChild(create);
@@ -214,3 +254,11 @@ export class ContactTable {
     this.element.tBodies[0].replaceChildren();
   }
 }
+
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
