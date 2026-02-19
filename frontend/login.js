@@ -11,13 +11,13 @@ function doLogin() {
     firstName = "";
     lastName = "";
 
-    const email = document.getElementById("loginEmail").value;
+    const username = document.getElementById("loginName").value;
     const password = document.getElementById("loginPassword").value;
 
     document.getElementById("loginResult").innerHTML = "";
 
     const payload = {
-        email: email,
+        username: username,
         password: password
     };
 
@@ -31,8 +31,9 @@ function doLogin() {
                 let jsonObject;
 
                 try {
-                    jsonObject = JSON.parse(xhr.responseText);
+                    jsonObject = JSON.parse(xhr.responseText.toString().substring(1));
                 } catch (err) {
+			console.log(xhr);
                     document.getElementById("loginResult").innerHTML = "Invalid server response";
                     return;
                 }
@@ -47,11 +48,13 @@ function doLogin() {
                 firstName = jsonObject.userFirstName;
                 lastName = jsonObject.userLastName;
 
-                saveCookie();
-                window.location.href = "contacts.html";
+		const date = new Date();
+		date.setTime(date.getTime() + 20 * 60 * 1000);
+                document.cookie = "token=" + jsonObject.token + ";expires=" + date.toUTCString() + ";path=/"
+                window.location.href = "index.html";
             } else {
                 document.getElementById("loginResult").innerHTML =
-                    "Server error: " + xhr.status;
+                    "Server error: " + JSON.parse(xhr.responseText.toString().substring(1)).error;
             }
         }
     };
