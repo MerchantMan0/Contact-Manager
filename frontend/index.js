@@ -45,7 +45,7 @@ function hasTextSomewhere(text, contact) {
     contact.name.includes(text) ||
     contact.email.includes(text) ||
     contact.phone.includes(text) ||
-    contact.created.toString().includes(text)
+    contact.created?.toString?.()?.includes?.(text)
   );
 }
 
