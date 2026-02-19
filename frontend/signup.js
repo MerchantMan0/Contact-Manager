@@ -10,7 +10,7 @@ let username = "";
 function doSignup() {
     userId = 0;
 
-    username = document.getElementById("signupEmail").value;
+    username = document.getElementById("signupUsername").value;
     const password = document.getElementById("signupPassword").value;
     firstName = document.getElementById("signupFirstName").value;
     lastName = document.getElementById("signupLastName").value;
@@ -30,7 +30,7 @@ function doSignup() {
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
+            if (xhr.status === 201) {
                 let jsonObject;
 
                 try {
@@ -50,11 +50,15 @@ function doSignup() {
                 firstName = jsonObject.userFirstName;
                 lastName = jsonObject.userLastName;
 
-                saveCookie();
-                window.location.href = "contacts.html";
+                //saveCookie();
+                const date = new Date();
+                date.setTime(date.getTime() + 20 * 60 * 1000);
+                document.cookie = "token=" + jsonObject.token + ";expires=" + date.toUTCString() + ";path=/"
+		window.location.href = "index.html";
             } else {
+		//console.log(xhr)
                 document.getElementById("signupResult").innerHTML =
-                    "Server error: " + xhr.status;
+                    "Server error: " + JSON.parse(xhr.responseText.toString().substring(1)).error;
             }
         }
     };
