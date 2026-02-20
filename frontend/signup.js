@@ -34,7 +34,7 @@ function doSignup() {
                 let jsonObject;
 
                 try {
-                    jsonObject = JSON.parse(xhr.responseText);
+                    jsonObject = JSON.parse(xhr.responseText.toString().substring(1));
                 } catch (err) {
                     document.getElementById("signupResult").innerHTML = "Invalid server response";
                     return;

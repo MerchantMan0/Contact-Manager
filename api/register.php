@@ -48,7 +48,7 @@ try {
 
     if($checkStmt->rowCount() > 0) {
         http_response_code(409);
-        echo json_encode((['error'=> 'Email already registered']));
+        echo json_encode((['error'=> 'Username already taken']));
         exit();
     }
 
@@ -65,12 +65,12 @@ try {
     $stmt->bindParam(':password', $hashedPassword);
 
     if($stmt->execute()) {
-        $userID = $db->lastInsertId();
+        $userId = $db->lastInsertId();
 
         //Generate token
         $token = JWT::encode([
             'userId' => $userId,
-            'username' => $data->email
+            'username' => $data->username
         ]);
 
         http_response_code(201);
@@ -81,7 +81,7 @@ try {
                 'id' => $userId,
                 'firstName' => $data->firstName,
                 'lastName' => $data->lastName,
-                'email' => $data->email
+                'username' => $data->username
             ]
         ]);
     } else {

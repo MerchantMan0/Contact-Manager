@@ -39,7 +39,7 @@ try {
     
     //Search contacts (with partial match)
     $searchTerm = '%' . $data->search . '%';
-    $query = "SELECT id, name, email, phone, created_at 
+    $query = "SELECT id, name, email, phone, createdAt 
               FROM contacts 
               WHERE userId = :userId 
               AND (name LIKE :search OR email LIKE :search OR phone LIKE :search)

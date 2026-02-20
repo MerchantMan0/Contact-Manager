@@ -52,8 +52,29 @@ function hasTextSomewhere(text, contact) {
 // Set up the search bar
 const searchBar = document.getElementById("search-bar");
 searchBar.addEventListener("input", (event) => {
-  table.setFilter((contact) => hasTextSomewhere(event.target.value, contact));
+  if (!event.target.value) {
+	// no search
+fetch(window.location.origin + "/api/contacts/getContacts.php", {
+  method: "GET",
+        headers: {
+                "Authorization": `Bearer ${getCookie("token")}`
+        }
+}).then(data => data.text()).then(text => JSON.parse(text.substring(1))).then((json) => {table.clear(); return json}).then(json => json.contacts.map(contact => table.addContact(contact))).then(() => table.display())
+  return;
+  }
+  //table.setFilter((contact) => hasTextSomewhere(event.target.value, contact));
+  //table.display();
+fetch(window.location.origin + "/api/contacts/searchContacts.php", {
+  method: "POST",
+        headers: {
+                "Authorization": `Bearer ${getCookie("token")}`
+        },
+body: JSON.stringify({search: event.target.value})
+}).then(data => data.text()).then(text => JSON.parse(text.substring(1))).then((data) => {
+  table.clear();
+  data.contacts.map(c => table.addContact(c));
   table.display();
+})
 });
 
 

@@ -69,7 +69,7 @@ export class ContactTable {
     row.dataset.editing = "false";
 
     // Normal fields
-    for (const field of ["name", "email", "phone", "created"]) {
+    for (const field of ["name", "email", "phone", "createdAt"]) {
       const cell = row.insertCell();
       cell.className = "table-cell";
 
@@ -107,6 +107,10 @@ export class ContactTable {
         for (const cell of row.childNodes) {
           if (cell.childNodes[0].tagName === "INPUT") {
             cell.childNodes[0].disabled = false;
+            if (cell.childNodes[0].name === "createdAt") {
+              // hotfix
+              cell.childNodes[0].disabled = true
+            }
           } else {
             // The edit and delete button
             cell.childNodes[0].innerText = "Save";
@@ -197,6 +201,10 @@ export class ContactTable {
     // Make the inputs editable
     for (const cell of row.childNodes) {
       cell.childNodes[0].disabled = false;
+      if (cell.childNodes[0].name === "createdAt") {
+        cell.childNodes[0].disabled = true;
+        cell.childNodes[0].value = new Date().toDateString();
+      }
     }
 
     const cell = row.insertCell();
@@ -220,7 +228,8 @@ export class ContactTable {
 
 	const body = JSON.stringify({
           ...newContact,
-          createdAt: newContact.created,
+          //createdAt: newContact.created,
+          createdAt: new Date().toDateString()
         })
 
       fetch(window.location.origin + "/api/contacts/addContact.php", {
@@ -230,7 +239,7 @@ export class ContactTable {
         },
         body: body
       }).then(data => data.text()).then(text => JSON.parse(text.toString().substring(1))).then((json) => {
-        this.addContact(json);
+        this.addContact(json.contact);
         this.display()
       })
 
@@ -251,7 +260,9 @@ export class ContactTable {
    * Remove all shown contacts from the table
    */
   clear() {
+    this.contacts = [];
     this.element.tBodies[0].replaceChildren();
+    this.display()
   }
 }
 
