@@ -7,24 +7,36 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body class="dark-mode">
-    <div id="header">Contacts Manager</div>
+    <div id="header">
+      Contacts Manager
+      <div style="float: right">
+        <button
+          onclick="
+            document.cookie =
+              'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            window.location.pathname = '/login.html';
+          "
+        >
+          Logout
+        </button>
+      </div>
+    </div>
 
     <div class="content">
       <!-- <div class="content" style="width: mine-content"> -->
-        <input class="search-bar" id="search-bar" />
-        <table id="contact-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Created</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-        <button id="add-contact" class="add-contact">Add</button>
+      <input class="search-bar" id="search-bar" />
+      <table id="contact-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Created</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <button id="add-contact" class="add-contact">Add</button>
       <!-- </div> -->
     </div>
 
