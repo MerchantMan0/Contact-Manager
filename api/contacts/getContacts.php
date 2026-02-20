@@ -11,8 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-require_once 'config/database.php';
-require_once 'utils/auth.php';
+require_once __DIR__.'/../config/database.php';
+require_once __DIR__.'/../utils/auth.php';
 
 try {
     //Get user from token
@@ -23,7 +23,7 @@ try {
     $db = $database->getConnection();
     
     //Get all contacts for user
-    $query = "SELECT id, name, email, phone, created_at FROM contacts WHERE userId = :userId ORDER BY name ASC";
+    $query = "SELECT id, name, email, phone, createdAt FROM contacts WHERE userId = :userId ORDER BY name ASC";
     $stmt = $db->prepare($query);
     $stmt->bindParam(':userId', $user['userId']);
     $stmt->execute();

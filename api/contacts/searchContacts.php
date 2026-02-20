@@ -17,8 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
-require_once 'config/database.php';
-require_once 'utils/auth.php';
+require_once __DIR__.'/../config/database.php';
+require_once __DIR__.'/../utils/auth.php';
 
 try {
     //Get user from token
@@ -39,7 +39,7 @@ try {
     
     //Search contacts (with partial match)
     $searchTerm = '%' . $data->search . '%';
-    $query = "SELECT id, name, email, phone, created_at 
+    $query = "SELECT id, name, email, phone, createdAt 
               FROM contacts 
               WHERE userId = :userId 
               AND (name LIKE :search OR email LIKE :search OR phone LIKE :search)

@@ -1,5 +1,11 @@
 import { ContactTable } from "./table.js";
 
+if (!getCookie("token")) {
+  // Users have to login
+  window.location.href = "/login.html"
+}
+
+
 /** @type {Contact[]} */
 const placeholderContacts = [
   {
@@ -19,9 +25,9 @@ const placeholderContacts = [
 ];
 
 const table = new ContactTable(document.getElementById("contact-table"));
-table.addContact(placeholderContacts[0]);
-table.addContact(placeholderContacts[1]);
-table.display();
+//table.addContact(placeholderContacts[0]);
+//table.addContact(placeholderContacts[1]);
+//table.display();
 
 const addButton = document.getElementById("add-contact");
 addButton.onclick = function () {
@@ -39,13 +45,50 @@ function hasTextSomewhere(text, contact) {
     contact.name.includes(text) ||
     contact.email.includes(text) ||
     contact.phone.includes(text) ||
-    contact.created.toString().includes(text)
+    contact.created?.toString?.()?.includes?.(text)
   );
 }
 
 // Set up the search bar
 const searchBar = document.getElementById("search-bar");
 searchBar.addEventListener("input", (event) => {
-  table.setFilter((contact) => hasTextSomewhere(event.target.value, contact));
+  if (!event.target.value) {
+	// no search
+fetch(window.location.origin + "/api/contacts/getContacts.php", {
+  method: "GET",
+        headers: {
+                "Authorization": `Bearer ${getCookie("token")}`
+        }
+}).then(data => data.text()).then(text => JSON.parse(text.substring(1))).then((json) => {table.clear(); return json}).then(json => json.contacts.map(contact => table.addContact(contact))).then(() => table.display())
+  return;
+  }
+  //table.setFilter((contact) => hasTextSomewhere(event.target.value, contact));
+  //table.display();
+fetch(window.location.origin + "/api/contacts/searchContacts.php", {
+  method: "POST",
+        headers: {
+                "Authorization": `Bearer ${getCookie("token")}`
+        },
+body: JSON.stringify({search: event.target.value})
+}).then(data => data.text()).then(text => JSON.parse(text.substring(1))).then((data) => {
+  table.clear();
+  data.contacts.map(c => table.addContact(c));
   table.display();
+})
 });
+
+
+// fetch stuff at the end in case it breaks
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+fetch(window.location.origin + "/api/contacts/getContacts.php", {
+  method: "GET",
+	headers: {
+		"Authorization": `Bearer ${getCookie("token")}`
+	}
+}).then(data => data.text()).then(text => JSON.parse(text.substring(1))).then(json => json.contacts.map(contact => table.addContact(contact))).then(() => table.display())
+

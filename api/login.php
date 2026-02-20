@@ -3,7 +3,7 @@
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: POST');
-header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Access-Control-Allow-Headers: Content-Type, Authroization');
 
 //Success (OK)
 if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
@@ -25,35 +25,35 @@ require_once 'utils/jwt.php';
 try {
     $data = json_decode(file_get_contents("php://input"));
 
-    //Check if email and password were provided
-    if(empty($data->email) || empty($data->password)) {
+    //Check if username and password were provided
+    if(empty($data->username) || empty($data->password)) {
         http_response_code(400);
-        echo json_encode(["error"=> "Email and password are required"]);
+        echo json_encode(["error"=> "Username and password are required"]);
         exit();
     }
 
     $database = new Database();
     $db = $database->getConnection();
 
-    //Find user by email
-    $query = "SELECT id, firstName, lastName, email, password FROM users WHERE email = :email LIMIT 1";
+    //Find user by username
+    $query = "SELECT id, userFirstName, userLastName, username, password FROM users WHERE username = :username LIMIT 1";
     $stmt = $db->prepare($query);
-    $stmt->bindParam(':email', $data->email);
+    $stmt->bindParam(':username', $data->username);
     $stmt->execute();
 
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     //Check if uesr exists (and if password matches)
-    if(!$user || !password_verify($data->password, $user['password'])) {
+    if(!password_verify($data->password, $user['password'])) {
         http_response_code(401);
-        echo json_encode(['error'=> 'Invalid email or password']);
+        echo json_encode(['error'=> 'Invalid username or password']);
         exit();
     }
 
     //Create JWT token
     $token = JWT::encode([
         'userId' => $user['id'],
-        'email' => $user['email']
+        'username' => $user['username']
     ]);
 
     http_response_code(200);
@@ -62,9 +62,9 @@ try {
         'token'=> $token,
         'user' => [
             'id'=> $user['id'],
-            'firstName' => $user['firstName'],
-            'lastName' => $user['lastName'],
-            'email' => $user['email']
+            'firstName' => $user['userFirstName'],
+            'lastName' => $user['userLastName'],
+            'username' => $user['username']
             ]
         ]);
 
